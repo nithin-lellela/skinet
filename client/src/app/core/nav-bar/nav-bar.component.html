@@ -3,21 +3,20 @@
   class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom ">
   <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
   style="margin-left: 5px;">
-    <img src="/assets/images/logo.png" style="max-height: 70px;" alt="logo">
+    <img src="/assets/images/logo.png" style="max-height: 70px;" alt="logo" routerLink="/">
   </a>
 
   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
   style="font-size: larger;">
-    <li><a href="#" class="nav-link px-2 link-dark">Home</a></li>
-    <li><a href="#" class="nav-link px-2 link-dark">Shop</a></li>
-    <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>
-    <li><a href="#" class="nav-link px-2 link-dark">Contact</a></li>
+    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link px-2 ">Home</a></li>
+    <li><a routerLink="/shop" routerLinkActive="active" href="#" class="nav-link px-2">Shop</a></li>
+    <li><a routerLink="/" href="#" class="nav-link px-2">Contact</a></li>
   </ul>
 
   <div class="col-md-3 text-end">
-    <a style="margin-right: 10px;" class="position-absolute">
-      <i class="fa fa-shopping-cart shop-icon fa-2x mr-5 text-dark">
-      </i>
+
+    <a style="margin-right: 10px;">
+      <i class="fa fa-shopping-cart shop-icon fa-2x mr-5 text-dark"></i>
     </a>
     <a style="margin-right: 5px;" class="btn btn-outline-secondary mr-2">Login</a>
     <a style="margin-right: 5px;" class="btn btn-outline-secondary mr-3">Sign up</a>
