@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from './shared/Models/product';
 import { IPagination } from './shared/Models/pagination';
+import { BasketService } from './basket/basket.service';
 
 @Component({
   selector: 'app-root',
@@ -10,23 +11,20 @@ import { IPagination } from './shared/Models/pagination';
 })
 export class AppComponent implements OnInit{
   title = 'client side';
-  products: IProduct [];
 
-  constructor(private http: HttpClient){
+  constructor(private http: HttpClient, private basketServices: BasketService){
 
   }
 
   ngOnInit(): void{
-    this.http.get("https://localhost:5001/api/products?pageSize=50").subscribe({
-      next: (successResponse: IPagination) => {
-        console.log(successResponse.data);
-        this.products = successResponse.data;
-      },
-      error: (errorResponse) => {
-        console.log(errorResponse);
-      },
-      complete: () => {
-      }
-    });
+
+    const baskedId = localStorage.getItem("basket_id");
+    if(baskedId){
+      this.basketServices.getBasket(baskedId).subscribe(() => {
+        console.log('initialized basket');
+        this.basketServices.basket$.subscribe(res => console.log(res));
+      })
+    }
+
   }
 }

@@ -33,4 +33,6 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
+  
+
 }

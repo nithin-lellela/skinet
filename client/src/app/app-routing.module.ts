@@ -10,6 +10,7 @@ import { ShopComponent } from './shop/shop.component';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'shop', loadChildren: () => import('./shop/shop.module').then(mod => mod.ShopModule) },
+  {path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod => mod.BasketModule) },
   {path: 'test-error', component: TestErrorComponent},
   {path: 'server-error', component: ServerErrorComponent},
   {path: 'not-found', component: NotFoundComponent},
