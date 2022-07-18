@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using API.Errors;
 using Microsoft.Extensions.Logging;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -17,6 +18,14 @@ namespace API.Controllers
         {
             _context = context;
         }
+
+        [HttpGet("testauth")]
+        [Authorize]
+        public ActionResult<string> GetSecretText()
+        {
+            return "Secret Stuff";
+        }
+
         [HttpGet("notFound")]
         public ActionResult GetNotFoundRequest(){
             var thing  = _context.Products.Find(42);

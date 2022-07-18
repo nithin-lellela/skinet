@@ -31,7 +31,7 @@ export class BasketService {
     return this.http.post("https://localhost:5001/api/basket", basket).subscribe({
       next: (response: IBasket) => {
         this.basketSource.next(response);
-        //console.log(response);
+        console.log(response);
         this.calculateBasketTotal();
       },
       error: (err) => {
@@ -45,6 +45,54 @@ export class BasketService {
 
   getCurrentBasketValue(){
     return this.basketSource.value;
+  }
+
+  incrementItemQuantity(item: IBasketItem){
+    const basket = this.getCurrentBasketValue();
+    console.log("You incremented");
+    const foundItemIndex = basket.items.findIndex(x => x.id === item.id);
+    basket.items[foundItemIndex].quantity += 1;
+    this.setBasket(basket);
+  }
+
+  decrementItemQuantity(item: IBasketItem){
+    const basket = this.getCurrentBasketValue();
+    const foundItemIndex = basket.items.findIndex(x => x.id === item.id);
+    if(basket.items[foundItemIndex].quantity > 1){
+      basket.items[foundItemIndex].quantity -= 1;
+      this.setBasket(basket);
+    }else{
+      this.removeItemFromBasket(item);
+    }
+  }
+
+  removeItemFromBasket(item: IBasketItem){
+    const basket = this.getCurrentBasketValue();
+    if(basket.items.some(x => x.id === item.id)){
+      basket.items = basket.items.filter(i => i.id !== item.id);
+      console.log(basket);
+      if(basket.items.length > 0){
+        this.setBasket(basket);
+      }else{
+        this.deleteBasket(basket);
+      }
+    }
+  }
+
+  deleteBasket(basket: IBasket){
+    return this.http.delete("https://localhost:5001/api/basket?id=" + basket.id).subscribe({
+      next: () => {
+        this.basketSource.next(null);
+        this.basketTotalSource.next(null);
+        localStorage.removeItem("basket_id");
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+
+      }
+    });
   }
 
   addItemToBasket(item: IProduct, quantity = 1){

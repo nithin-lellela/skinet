@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BasketService } from 'src/app/basket/basket.service';
 import { IProduct } from 'src/app/shared/Models/product';
 
 @Component({
@@ -11,8 +12,9 @@ import { IProduct } from 'src/app/shared/Models/product';
 export class ProductDetailsComponent implements OnInit {
 
   product: IProduct;
+  quantity = 1;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private basketService: BasketService) { }
 
   ngOnInit(): void {
     this.loadProduct();
@@ -33,6 +35,20 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-  
+  AddItemToBasket(){
+    this.basketService.addItemToBasket(this.product, this.quantity);
+  }
+
+  IncrementQuantity(){
+    this.quantity++;
+  }
+
+  DecrementQuantity(){
+    if(this.quantity > 1){
+      this.quantity -= 1;
+    }
+  }
+
+
 
 }
